@@ -1,0 +1,155 @@
+De la pagina principal de Mercado  Libre México:
+
+	Ok URL_ML_MX = https://www.mercadolibre.com.mx/   #Esta variable será utilizada en el script de Python de web scraping más adelante.
+	
+*******En la URL_ML_MX*******
+
+	*XPath para las ofertas del día (titulos de los productos en oferta): $x('/html/body/main/div/div/section[3]/div/div[2]/div/div/div/div/div/a/div/p/text()').map( x => x.wholeText)
+
+	*XPath para las oferta del día (URLs):  $x('/html/body/main/div/div/section[3]/div/div[2]/div/div/div/div/div/a/@href').map( x => x.value)
+
+	*XPath para las ofertas del día (Precios con descuento en MXN): $x('/html/body/main/div/div/section[3]/div/div[2]/div/div/div/div/div/a/div/div/span/span[2]/text()').map( x => x.wholeText)
+
+	*XPath para las ofertas del día (Precios sin descuento en MXN): 
+
+	*XPath para las ofertas del día (Descuentos en %, mostrados en el sitio): $x('/html/body/main/div/div/section[3]/div/div[2]/div/div/div/div/div/a/div/div/span[2]/text()').map( x => x.wholeText)
+
+	*XPath para las ofertas del día (URLs de las imagenes del producto): $x('/html/body/main/div/div/section[3]/div/div[2]/div/div/div/div/div/a/div/div/span[2]/text()').map( x => x.wholeText)
+
+      Ok XPath de la URL de todas las ofertas: $x('/html/body/main/div/div/section[4]/div/div[1]/a/@href').map( x => x.value)
+
+        *XPath de la URL de las categorias populares: $x('/html/body/main/div/div/section[10]/div/div[2]/div/div/div/div/div/div/a/@href').map( x => x.value)
+
+	*XPath del título de todas las categorías: $x('/html/body/main/div/div/section[10]/div/div[2]/div/div/div/div/div/div/a/p/text()').map( x => x.wholeText)
+
+
+*******En la URL_ML_MX / todas las ofertas/pag1*******
+
+	Ok XPath para todas las ofertas (URLs de la primera página): $x('/html/body/main/div/div[2]/div[2]/div/ol/li/a/@href').map( x => x.value)
+								["https://articulo.mercadolibre.com.mx/MLM-790881183…s-MLM__3579__EAGLE&promotion_type=DEAL_OF_THE_DAY",
+								 "https://articulo.mercadolibre.com.mx/MLM-791505442…s-MLM__3579__EAGLE&promotion_type=DEAL_OF_THE_DAY",
+								 "https://articulo.mercadolibre.com.mx/MLM-791854115…s-MLM__3579__EAGLE&promotion_type=DEAL_OF_THE_DAY",
+								 "https://articulo.mercadolibre.com.mx/MLM-759610708…s-MLM__3579__EAGLE&promotion_type=DEAL_OF_THE_DAY",
+								 "https://articulo.mercadolibre.com.mx/MLM-756026032…s-MLM__3579__EAGLE&promotion_type=DEAL_OF_THE_DAY",
+								 "https://articulo.mercadolibre.com.mx/MLM-793799310…s-MLM__3579__EAGLE&promotion_type=DEAL_OF_THE_DAY",
+								 "https://articulo.mercadolibre.com.mx/MLM-794055420…s-MLM__3579__EAGLE&promotion_type=DEAL_OF_THE_DAY",
+								 "https://articulo.mercadolibre.com.mx/MLM-790579487…s-MLM__3579__EAGLE&promotion_type=DEAL_OF_THE_DAY",
+								 "https://articulo.mercadolibre.com.mx/MLM-791200891…s-MLM__3579__EAGLE&promotion_type=DEAL_OF_THE_DAY",
+								 "https://articulo.mercadolibre.com.mx/MLM-687486586…s-MLM__3579__EAGLE&promotion_type=DEAL_OF_THE_DAY",
+								 "https://articulo.mercadolibre.com.mx/MLM-624930299…s-MLM__3579__EAGLE&promotion_type=DEAL_OF_THE_DAY",
+								 "https://articulo.mercadolibre.com.mx/MLM-772425841…s-MLM__3579__EAGLE&promotion_type=DEAL_OF_THE_DAY",
+								 "https://articulo.mercadolibre.com.mx/MLM-762820073…s-MLM__3579__EAGLE&promotion_type=DEAL_OF_THE_DAY",
+								 "https://articulo.mercadolibre.com.mx/MLM-704624160…s-MLM__3579__EAGLE&promotion_type=DEAL_OF_THE_DAY",
+								 "https://articulo.mercadolibre.com.mx/MLM-707580796…s-MLM__3579__EAGLE&promotion_type=DEAL_OF_THE_DAY",
+								 "https://articulo.mercadolibre.com.mx/MLM-763209005…s-MLM__3579__EAGLE&promotion_type=DEAL_OF_THE_DAY",
+								 "https://articulo.mercadolibre.com.mx/MLM-785717106…s-MLM__3579__EAGLE&promotion_type=DEAL_OF_THE_DAY",
+								 "https://articulo.mercadolibre.com.mx/MLM-706500072…s-MLM__3579__EAGLE&promotion_type=DEAL_OF_THE_DAY",
+								 "https://articulo.mercadolibre.com.mx/MLM-771100067…s-MLM__3579__EAGLE&promotion_type=DEAL_OF_THE_DAY",
+								 "https://articulo.mercadolibre.com.mx/MLM-789741033…s-MLM__3579__EAGLE&promotion_type=DEAL_OF_THE_DAY",
+								 "https://articulo.mercadolibre.com.mx/MLM-712268498…s-MLM__3579__EAGLE&promotion_type=DEAL_OF_THE_DAY",
+								 "https://articulo.mercadolibre.com.mx/MLM-763215459…s-MLM__3579__EAGLE&promotion_type=DEAL_OF_THE_DAY",
+								 "https://articulo.mercadolibre.com.mx/MLM-707589827…s-MLM__3579__EAGLE&promotion_type=DEAL_OF_THE_DAY",
+								 "https://articulo.mercadolibre.com.mx/MLM-754624166…ns-MLM__3579__EAGLE&promotion_type=LIGHTNING_DEAL",
+								 "https://articulo.mercadolibre.com.mx/MLM-704754363…ns-MLM__3579__EAGLE&promotion_type=LIGHTNING_DEAL",
+								 "https://articulo.mercadolibre.com.mx/MLM-779451305…s-MLM__3579__EAGLE&promotion_type=TODAY_PROMOTION",
+								 "https://articulo.mercadolibre.com.mx/MLM-728872556…s-MLM__3579__EAGLE&promotion_type=TODAY_PROMOTION",
+								 "https://articulo.mercadolibre.com.mx/MLM-757611202…ns-MLM__3579__EAGLE&promotion_type=BUY_BOX_WINNER",
+								 "https://articulo.mercadolibre.com.mx/MLM-740097323…s-MLM__3579__EAGLE&promotion_type=TODAY_PROMOTION",
+								 "https://articulo.mercadolibre.com.mx/MLM-792314102…s-MLM__3579__EAGLE&promotion_type=TODAY_PROMOTION",
+								 "https://articulo.mercadolibre.com.mx/MLM-747229606…ns-MLM__3579__EAGLE&promotion_type=BUY_BOX_WINNER",
+								 "https://articulo.mercadolibre.com.mx/MLM-792448727…ns-MLM__3579__EAGLE&promotion_type=BUY_BOX_WINNER",
+								 "https://articulo.mercadolibre.com.mx/MLM-744788274…s-MLM__3579__EAGLE&promotion_type=TODAY_PROMOTION",
+								 "https://articulo.mercadolibre.com.mx/MLM-772859302…s-MLM__3579__EAGLE&promotion_type=TODAY_PROMOTION",
+								 "https://articulo.mercadolibre.com.mx/MLM-793960362…ns-MLM__3579__EAGLE&promotion_type=BUY_BOX_WINNER",
+								 "https://articulo.mercadolibre.com.mx/MLM-608390370…s-MLM__3579__EAGLE&promotion_type=TODAY_PROMOTION",
+								 "https://articulo.mercadolibre.com.mx/MLM-765952090…ns-MLM__3579__EAGLE&promotion_type=LIGHTNING_DEAL",
+								 "https://articulo.mercadolibre.com.mx/MLM-786850927…s-MLM__3579__EAGLE&promotion_type=TODAY_PROMOTION",
+								 "https://articulo.mercadolibre.com.mx/MLM-762221247…s-MLM__3579__EAGLE&promotion_type=TODAY_PROMOTION",
+								 "https://articulo.mercadolibre.com.mx/MLM-747956299…s-MLM__3579__EAGLE&promotion_type=TODAY_PROMOTION",
+								 "https://articulo.mercadolibre.com.mx/MLM-765612588…ns-MLM__3579__EAGLE&promotion_type=LIGHTNING_DEAL",
+								 "https://articulo.mercadolibre.com.mx/MLM-734182885…s-MLM__3579__EAGLE&promotion_type=TODAY_PROMOTION",
+								 "https://articulo.mercadolibre.com.mx/MLM-754031606…s-MLM__3579__EAGLE&promotion_type=TODAY_PROMOTION",
+								 "https://articulo.mercadolibre.com.mx/MLM-775103653…ns-MLM__3579__EAGLE&promotion_type=LIGHTNING_DEAL",
+								 "https://articulo.mercadolibre.com.mx/MLM-744277119…s-MLM__3579__EAGLE&promotion_type=TODAY_PROMOTION",
+								 "https://articulo.mercadolibre.com.mx/MLM-750130828…s-MLM__3579__EAGLE&promotion_type=TODAY_PROMOTION",
+								 "https://articulo.mercadolibre.com.mx/MLM-792744873…ns-MLM__3579__EAGLE&promotion_type=BUY_BOX_WINNER",
+								 "https://articulo.mercadolibre.com.mx/MLM-725366950…s-MLM__3579__EAGLE&promotion_type=TODAY_PROMOTION"]
+
+
+	Ok XPath para todas las imagenes (URLs de la primera página): $x('/html/body/main/div/div[2]/div[2]/div/ol/li/a/div/img/@src').map( x => x.value)
+
+	*XPath para todos los precios actuales (valores de la primera página): $x('/html/body/main/div/div[2]/div[2]/div/ol/li/a/div/div/div/span/span/text()').map( x => x.wholeText)
+										Observación, los centavos están en otro directorio y no es aplicable en todos los productos
+
+	*XPath para todos los precios anteriores (valores de la primera página): $x('/html/body/main/div/div[2]/div[2]/div/ol/li/a/div/div/span[@class = "promotion-item__oldprice"]/text()').map( x => x.wholeText)
+										
+										Observacion, no toddos tienen este atributo, y los que no lo tienen, tienen otra estructura interna diferente a los demas.
+
+	Ok XPath para todos los títulos: $x('/html/body/main/div/div[2]/div[2]/div/ol/li/a/div/div/p[@class="promotion-item__title"]/text()').map( x => x.wholeText)
+
+	Ok XPath para las demás páginas: $x('/html/body/main/div/div[2]/div[2]/div/ul/li/a/@href').map( x => x.value) El límite del for es el elemento [10 de la lista]
+					URLs del estilo "https://www.mercadolibre.com.mx/ofertas?page=i" donde i va de 2 hasta el elemento 10 de la lista.
+
+
+*******En la URL_ML_MX / todas las ofertas/pag1/producto(i) que tiene precio anterior.******* SI $x('//*[@id="productInfo"]') == [form#productInfo.short-description__form]
+
+	Ok XPath para la currency: $x('//*[@id="productInfo"]/fieldset/span/span[@class = "price-tag-symbol"]/text()').map( x => x.wholeText)
+
+	Ok XPath para el precio principal actual: $x('/html/body/main/div/div[1]/div[2]/div[1]/section[1]/div/form/fieldset[1]/span[2]/span[@class = "price-tag-fraction"]/text()').map( x => x.wholeText)
+
+	Ok Xpath para el precio en centavos: $x('/html/body/main/div/div[1]/div[2]/div[1]/section[1]/div/form/fieldset[1]/span[2]/span[@class="price-tag-cents"]/text()').map( x => x.wholeText)
+
+	Ok Xpath para el precio anterior: $x('/html/body/main/div/div[1]/div[2]/div[1]/section[1]/div/form/fieldset[1]/span[1]/del/span[@class = "price-tag-fraction"]/text()').map(x => x.wholeText)
+
+	Ok XPath para el precio anterior (Centavos): $x('/html/body/main/div/div[1]/div[2]/div[1]/section[1]/div/form/fieldset[1]/span[1]/del/span[@class = "price-tag-cents-visible" ]/text()').map( x => x.wholeText)
+
+	Ok XPath para el descuento: $x('/html/body/main/div/div[1]/div[2]/div[1]/section[1]/div/form/fieldset[1]/div/p/text()').map( x => x.wholeText)
+
+	Ok XPath para el número de artículos vendidos y condición: $x('/html/body/main/div/div[1]/div[2]/div[1]/section[1]/div/dl/div[@class = "item-conditions"]/text()').map( x => x.wholeText)
+
+	Ok XPath para el rating: $x('/html/body/main/div/div[1]/div[1]/section[4]/div/div[1]/span[@class = "review-summary-average"]/text()').map( x => x.wholeText)
+			          
+
+	Ok Xpath para el número de opiniones: $x('/html/body/main/div/div[1]/div[1]/section[4]/div/div[1]/span[2]/div/span[2]/text()').map( x => x.wholeText)
+
+	OK *XPath para la descripción del producto: $x('//section[@class = "main-section item-description "]//p[not (@class) ]/text()').map( x => x.wholeText)
+
+	OK XPath para las caractrísticas(campos): $x('/html/body/main/div/div[1]/div[1]/section[2]/div/section[1]/ul/li/strong/text()').map( x => x.wholeText)
+
+	Ok Xpath para los valores de las características: $x('/html/body/main/div/div[1]/div[1]/section[2]/div/section[1]/ul/li/span/text()').map( x => x.wholeText)
+
+	Ok Xpath para la categoría y subcategorias del producto: $x('/html/body/main/section/nav/div/ul/li/a/text()').map( x => x.wholeText)
+
+
+*******En la URL_ML_MX / todas las ofertas/pag1/producto(i) que NO precio anterior.******* SI  $x('//*[@id="productInfo"]') == []
+
+	Ok XPath para la currency: $x('/html/body/main/div[2]/div[2]/div[1]/div[1]/div[1]/div[2]/div[2]/div[1]/div/span/span[1]/text()').map( x => x.wholeText)
+
+	XPath para el precio principal actual: $x('/html/body/main/div[2]/div[2]/div[1]/div[1]/div[1]/div[2]/div[2]/div/div/span/span[@class = "price-tag-fraction"]/text()').map( x => x.wholeText)
+
+	Xpath para el precio en centavos: $x('/html/body/main/div[2]/div[2]/div[1]/div[1]/div[1]/div[2]/div[2]/div/div/span/span[@class = "price-tag-cents"]/text()').map( x => x.wholeText)
+
+	Xpath para el precio anterior: $x('/html/body/main/div[2]/div[2]/div[1]/div[1]/div[1]/div[2]/div[2]/del/span[@class="price-tag-fraction"]/text()').map( x => x.wholeText)
+
+	XPath para el precio anterior (Centavos): $x('/html/body/main/div[2]/div[2]/div[1]/div[1]/div[1]/div[2]/div[2]/del/span[@class="price-tag-cents-visible"]/text()').map( x => x.wholeText)
+
+	XPath para el descuento: $x('/html/body/main/div[2]/div[2]/div[1]/div[1]/div[1]/div[2]/div[2]/div[1]/div/span[@class="ui-pdp-price__second-line__label ui-pdp-color--GREEN"]/text()').map( x => x.wholeText)
+
+	XPath para el número de artículos vendidos y condición: $x('/html/body/main/div[2]/div[2]/div[1]/div[1]/div[1]/div[2]/div[1]/div[1]/div[1]/span[@class = "ui-pdp-subtitle"]/text()').map( x => x.wholeText)
+
+	XPath para el rating: $x('/html/body/main/div[2]/div[2]/div[3]/div[1]/div[2]/div/section/header/div/div[1]/h2[@class = "ui-pdp-reviews__rating__summary__average"]/text()').map( x => x.wholeText)
+
+	Xpath para el número de opiniones: $x('/html/body/main/div[2]/div[2]/div[3]/div[1]/div[2]/div/section/header/div/div[1]/div/h4[@class = "ui-pdp-reviews__rating__summary__label"]/text()').map( x => x.wholeText)
+
+	*XPath para la descripción del producto: $x('/html/body/main/div[2]/div[2]/div[1]/div[1]/div[3]/div/div/p[ @class="ui-pdp-description__content"]/text()').map( x => x.wholeText)
+
+	XPath para las caractrísticas(campos): $x('/html/body/main/div[2]/div[2]/div[1]/div[1]/div[4]/div/div/div[1]/table/tbody/tr/th/text()').map( x => x.wholeText)
+
+	Xpath para los valores de las características: $x('/html/body/main/div[2]/div[2]/div[1]/div[1]/div[4]/div/div/div[1]/table/tbody/tr/td/span[@class="andes-table__column--value"]/text()').map( x => x.wholeText)
+
+	Xpath para la categoría y subcategorias del producto: $x('/html/body/main/div[2]/div[2]/div[1]/div[1]/div[4]/div/div/div[1]/table/tbody/tr/td/span[@class="andes-table__column--value"]/text()').map( x => x.wholeText)
+
+
+
+
+
