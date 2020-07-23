@@ -26,7 +26,7 @@ This repo will have a branch per Scrapers focused on the following Web Sellers:
 https://www.statista.com/topics/2453/e-commerce-in-latin-america/
 
 ## Files in ML_testing branch:
-- Oferta: Directory dedicated for  Offers Section Web Scraper in Mercado Libre.
+- \Web_Scraping_ML\Ofertas_MX\: Directory dedicated for Products-in-Hot-Sale Web Scraper at Mercado Libre\Mexico.
 	- /venv: Enviroment.
 	- CSV_Design.xlsx : Sketch of the main table before SQL scripting.
 	- main.py : Web Scraper coding in Python Script .
