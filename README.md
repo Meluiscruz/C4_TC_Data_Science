@@ -34,5 +34,13 @@ https://www.statista.com/topics/2453/e-commerce-in-latin-america/
 	- ML_XPath_exp.txt: First sketch of XPaths directory 
 
 ## Files in AZ_testing branch:
-- Please modify README.md and list on it the files before you are going to push.
-	Atte: Luis Cruz
+- \'Amazon Scraper'\: Directory dedicated for Products in Top Sells at Amazon Mexico.
+	-amazon_boxes.py : Obtains the top sold products, extratinc:
+		1) Rank
+		2) Product Name
+		3) Image URL
+		4) Product URL
+		5) Stars
+		6) Reviews
+		7) Author (books, music)/Company (industrial products)
+		8) Edition (books, music)/Console (videogames)
