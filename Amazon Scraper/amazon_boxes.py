@@ -15,7 +15,7 @@ def extract_soup(url, preview=True):
     soup = BeautifulSoup(response.text, 'lxml')
 
     if preview==True:
-        print(s.prettify())
+        print(soup.prettify())
 
     return soup
 
@@ -24,19 +24,22 @@ def top_amazon_boxes(soup):
 
     return boxes
 
-def boxes_info(boxes):
+def scrape_boxes(boxes):
     
-    ranks = []
-    product_names = []
-    image_urls = []
-    product_links = []
-    star_ratings = []
-    reviews = []
-    authors_companies = []
-    editions_consoles = []
+    ranks = [None]*50
+    product_names = [None]*50
+    image_urls = [None]*50
+    product_links = [None]*50
+    star_ratings = [None]*50
+    reviews = [None]*50
+    authors_companies = [None]*50
+    editions_consoles = [None]*50
+    min_prices = [None]*50
+    max_prices = [None]*50
 
     amz_mx_url = 'https://www.amazon.com.mx'
-
+    
+    n_box = 0
     for box in boxes:
         rank_box = box.find_all('span', attrs={'class':'zg-badge-text'})
         products_and_image_box = box.find_all('div', attrs={'class' : 'a-section a-spacing-small'})
@@ -45,32 +48,54 @@ def boxes_info(boxes):
         reviews_box = box.find_all('a', attrs={'class' : 'a-size-small a-link-normal'})
         authors_company_box = box.find_all('span', attrs={'class' : 'a-size-small a-color-base'})
         editions_console_box = box.find_all('span', attrs={'class' : 'a-size-small a-color-secondary'})
+        prices_box = box.find_all('span', attrs={'class' : "p13n-sc-price"})
         
         
-        rank = rank_box[0].get_text()
-        product_name = products_and_image_box[0].img.get('alt')
-        image_url = products_and_image_box[0].img.get('src')
-        product_link = amz_mx_url + product_links_box[0].get('href')
-        try:
-            star_rating = star_ratings_box[0].get_text()
-            review = reviews_box[0].get_text()
-            author_company = authors_company_box[0].get_text()
-            edition_console = editions_console_box[0].get_text()
-        except:
-            star_rating = 'N/A'
-            review = 'N/A'
-            author_company = 'N/A'
-            edition_console = 'N/A'
-            print(star_ratings_box)
+        ranks[n_box] = rank_box[0].get_text()
+        product_names[n_box] = products_and_image_box[0].img.get('alt')
+        image_urls[n_box] = products_and_image_box[0].img.get('src')
+        product_links[n_box] = amz_mx_url + product_links_box[0].get('href')
 
-        ranks.append(rank)
-        product_names.append(product_name)
-        image_urls.append(image_url)
-        product_links.append(product_link)
-        star_ratings.append(star_rating)
-        reviews.append(review)
-        authors_companies.append(author_company)
-        editions_consoles.append(edition_console)
+        #Depended cases
+        try:
+            star_ratings[n_box] = float(star_ratings_box[0].get_text()[:3])
+            reviews[n_box] = int(reviews_box[0].get_text().replace(',',''))
+        except:
+            print(f'no revs at : {n_box + 1}')
+            star_ratings[n_box] = None
+            reviews[n_box] = None
+
+        #Individual cases
+        try:
+            authors_companies[n_box] = authors_company_box[0].get_text()
+        except:
+            print(f'no author at : {n_box + 1}')
+            authors_companies[n_box] = None
+        
+        try:
+            editions_consoles[n_box] = editions_console_box[0].get_text()
+        except:
+            print(f'no edition at : {n_box + 1}')
+            editions_consoles[n_box] = None
+
+        if domain == 'mx':
+            coin_symbol = 1
+        elif domain == 'br':
+            coin_symbol = 2
+
+        try:
+            min_prices[n_box] = float(prices_box[0].get_text()[coin_symbol:].replace(',',''))
+        except:
+            print(f'no min price at : {n_box + 1}')
+            min_prices[n_box] = None
+
+        try:    
+            max_prices[n_box] = float(prices_box[1].get_text()[coin_symbol:].replace(',',''))
+        except:
+            max_prices[n_box] = None
+
+        n_box = n_box + 1 
+
 
     # Dictionary
     boxes_dict = {
@@ -81,11 +106,14 @@ def boxes_info(boxes):
     "Stars": star_ratings,
     "Reviews": reviews,
     "Authors/Company": authors_companies,
-    "Edition/Console": editions_consoles
+    "Edition/Console": editions_consoles,
+    "Price_std_or_min" : min_prices,
+    "Max_prices" : max_prices
     }
 
 
     return boxes_dict
+    
 def test_urls(URL_dict, secs):
     n_key = 1
     t_keys = len(URL_dict)
@@ -137,16 +165,17 @@ if __name__=='__main__':
         'top_videojuegos': 'videogames'
         }
 
-    url = f'https://www.amazon.com.mx/gp/bestsellers/{URL_dict["top_musica"]}/ref=zg_bs_nav_0'
+    domain = 'mx'
+    url = f'https://www.amazon.com.{domain}/gp/bestsellers/{URL_dict["top_musica"]}/ref=zg_bs_nav_0'
     print(f'\nURL given: {url}')
 
     soup = extract_soup(url, preview=False)
     boxes = top_amazon_boxes(soup)
     print(f'Boxes: {len(boxes)}')
 
-    amaz_boxes = boxes_info(boxes)
+    amaz_boxes = scrape_boxes(boxes)
 
     for key in amaz_boxes:
         print(f'{key}: {len(amaz_boxes[key])}')
         print(amaz_boxes[key])
-        print('\n')
+        print('loaded \n')
