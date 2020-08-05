@@ -35,12 +35,18 @@ https://www.statista.com/topics/2453/e-commerce-in-latin-america/
 
 ## Files in AZ_testing branch:
 - \'Amazon Scraper'\: Directory dedicated for Products in Top Sells at Amazon Mexico.
-	-amazon_boxes.py : Obtains the top sold products, extratinc:
-		1) Rank
-		2) Product Name
-		3) Image URL
-		4) Product URL
-		5) Stars
-		6) Reviews
-		7) Author (books, music)/Company (industrial products)
-		8) Edition (books, music)/Console (videogames)
+	-The main file is -> amazon_scraper_boxes_df.py It obtains the top sold products, extratinc:
+		- Date
+		- Rank
+		- Product Name
+		- Image URL
+		- Product URL
+		- Stars
+		- Reviews
+		- Author (books, music)/Company (industrial products)
+		- Edition (books, music)/Console (videogames)
+	-Something to consider is that you can program a scrap n-times in steps of n-minutes. For examples:
+		- If you want 2 scraps in one hour, it would be programed as:
+		scrap_amazon_times(2, 30)
+		- If you want 3 scraps in one hour, it would be programed as:
+		scrap_amazon_times(3, 20)
