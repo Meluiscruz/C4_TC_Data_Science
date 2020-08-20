@@ -13,8 +13,12 @@
         "description": "Operaciones sobre el producto"
       },
       {
-        "name": "Stores",
+        "name": "shops",
         "description": "Operaciones sobre las tiendas"
+      },
+      {
+        "name": "cathegorys",
+        "description": "Operaciones sobre las categorias"
       }
     ],
     "schemes": [
@@ -48,7 +52,7 @@
               "default": {
               "description": "List of products"
               }
-          }
+            }
           }
         },
         "/products/{ country }": {
@@ -63,7 +67,8 @@
                 "default": {
                 "description": "List of products"
                 }
-            }
+            },
+            "deprecated": true
             }
         },
         "/products/{ country }/{ productId }": {
@@ -78,7 +83,8 @@
               "default": {
               "description": "List of products"
               }
-          }
+          },
+          "deprecated": true
           }
         },
         "/products/{ storeName }": {
@@ -93,7 +99,8 @@
                     "200": {
                         "description": "Sucessfull operation"
                     }
-                }
+                },
+                "deprecated": true
             }
         },
         "/products/{ storeName }/{ cathegory }": {
@@ -108,7 +115,8 @@
                     "200": {
                         "description": "Sucessfull operation"
                     }
-                }
+                },
+                "deprecated": true
             }
         },
         "/products/{ storeName }/{ cathegory }/{ productId }": {
@@ -120,10 +128,11 @@
                 "operationId": "ShowId",
                 "description": null,
                 "responses": {
-                    "200": {
-                        "description": "Sucessfull operation"
-                    }
-                }
+                  "200": {
+                    "description": "Sucessfull operation"
+                  }
+                },
+                "deprecated": true
             }
         },
         "/products/{ storeName }/{ country }": {
@@ -138,7 +147,8 @@
                 "default": {
                 "description": "List of products"
                 }
-            }
+            },
+            "deprecated": true
             }
         },
         "/products/{ storeName }/{ country }/{ productId }": {
@@ -153,7 +163,8 @@
                 "default": {
                 "description": "List of products"
                 }
-            }
+            },
+            "deprecated": true
             }
         },
         "/products/{ storeName }/{ country }/{ cathegory }": {
@@ -168,7 +179,8 @@
                 "default": {
                 "description": "List of products"
                 }
-            }
+            },
+            "deprecated": true
             }
         },
         "/products/{ storeName }/{ country }/{ cathegory }/{ productId }": {
@@ -183,15 +195,16 @@
                 "default": {
                 "description": "List of products"
                 }
-            }
+            },
+            "deprecated": true
             }
         },
-        "/stores": {
+        "/shops": {
             "get": {
             "tags": [
-                "Stores"
+                "shops"
             ],
-            "summary": "List the stores",
+            "summary": "List the shops",
             "operationId": "listStore",
             "description": null,
             "responses": {
@@ -201,12 +214,43 @@
             }
             }
         },
-        "/stores/{ country }/": {
+        "/shops{ id }": {
+          "get": {
+          "tags": [
+              "shops"
+          ],
+          "summary": "List the shops",
+          "operationId": "listStore",
+          "description": null,
+          "responses": {
+              "default": {
+              "description": "List of products"
+              }
+          }
+          }
+      },
+        "/shops/{ country }/": {
             "get": {
             "tags": [
-                "Stores"
+                "shops"
             ],
-            "summary": "List the stores by countrys",
+            "summary": "List the shops by countrys",
+            "operationId": "listUser",
+            "description": null,
+            "responses": {
+                "default": {
+                "description": "List of products"
+                }
+            },
+            "deprecated": true
+            }
+        },
+        "/cathegory": {
+            "get": {
+            "tags": [
+                "cathegorys"
+            ],
+            "summary": "List the cathegorys",
             "operationId": "listUser",
             "description": null,
             "responses": {
@@ -215,7 +259,22 @@
                 }
             }
             }
-        }
+        },
+        "/cathegory/{ id }": {
+          "get": {
+          "tags": [
+              "cathegorys"
+          ],
+          "summary": "List the cathegorys",
+          "operationId": "listUser",
+          "description": null,
+          "responses": {
+              "default": {
+              "description": "List of products"
+              }
+          }
+          }
+      }
     }, 
     "securityDefinitions": {
       "4SS_auth": {

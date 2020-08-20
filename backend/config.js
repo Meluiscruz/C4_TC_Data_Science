@@ -8,6 +8,15 @@ module.exports = {
     },
     mongo: {
         port: process.env.MONGO_PORT,
-        connect: process.env.MONGO_CONNECT
+        url: process.env.MONGO_URL
+    },
+    product: {
+        port: process.env.PRODUCT_PORT
+    },
+    shop: {
+        port: process.env.SHOP_PORT
+    },
+    cathegory: {
+        port: process.env.CATHEGORY_PORT
     }
 }
