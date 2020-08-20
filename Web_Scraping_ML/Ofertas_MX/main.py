@@ -2,6 +2,7 @@ import requests
 import lxml.html as html
 import datetime
 import os
+import sys
 
 #STEP 1. Declaring XPATH vars
 
@@ -18,14 +19,18 @@ XPATH_PRODUCT_TITLES_AT_OFFERS = '/html/body/main/div//div/ol/li/a/div/div/p/tex
 XPATH_URL_EACH_PROD_AT_OFFERS = '/html/body/main/div//div[2]/div/ol/li/a/@href' 
 
 ##Gateway to the rest of pages (https://www.mercadolibre.com.mx/ofertas?page=i where i is index >= 2)
-XPATH_LINK_TO_PAGES_AT_OFFERS = '/html/body/main/div/div[2]/div[2]/div/ul/li/a/@href'
+XPATH_NEXT_PAGE = '/html/body/main/div/section[2]/div/div[2]/div/ul/li[13]/a/@href'
+#XPATH_LINK_TO_PAGES_AT_OFFERS = '/html/body/main/div/div[2]/div[2]/div/ul/li/a/@href'
 
 ##If PRODUCT SENSOR == ["Comprar ahora"], PRODUCT = C1. ELSE, PRODUCT = C2 
 #XPATH_PRODUCT_SENSOR = '/html/body/main/div[2]/div[1]/div[2]/div[1]/section[1]/div/form/div/div/div/input[@form = "productInfo"]'
 XPATH_PRODUCT_SENSOR = '//div/div/input[@form="productInfo"]'
 
 ##At main_page/offers_page[i]/product (IF $x('//*[@id="productInfo"]') == [form#productInfo.short-description__form])
-XPATH_URL_MAIN_IMG_C1 = '/html/body/main/div[2]/div[1]/div[1]/div[1]/div/div/div/figure[1]/a/img/@src'
+
+XPATH_TITLE_C1 = '//div[1]/section[1]/div/header/h1/text()'
+#XPATH_URL_MAIN_IMG_C1 = '/html/body/main/div[2]/div[1]/div[1]/div[1]/div/div/div/figure[1]/a/img/@src'
+XPATH_URL_MAIN_IMG_C1 = '//div[1]/div/div/div/figure[1]/a/img/@src'
 XPATH_CURRENCY_C1 = '//*[@id="productInfo"]/fieldset/span/span[@class = "price-tag-symbol"]/text()'
 XPATH_MAIN_PRICE_INTEGER_C1 = '/html/body/main/div/div[1]/div[2]/div[1]/section[1]/div/form/fieldset[1]/span[2]/span[@class = "price-tag-fraction"]/text()'
 XPATH_MAIN_PRICE_CENTS_C1 = '/html/body/main/div/div[1]/div[2]/div[1]/section[1]/div/form/fieldset[1]/span[2]/span[@class="price-tag-cents"]/text()'
@@ -42,7 +47,8 @@ XPATH_CATEGORY_PATH_C1 = '/html/body/main/section/nav/div/ul/li/a/text()'
 
 ##At main_page/offers_page[i]/product (IF $x('//*[@id="productInfo"]') == [])
 #NOTE: Those XPath expresions have to be ammended to achive better results.
-XPATH_URL_MAIN_IMG_C2 = '//*[@id="root-app"]/div[2]/div[2]/div[1]/div[1]/div[1]/div[1]/div/div[2]/span[1]/figure/img/@src'
+XPATH_TITLE_C2 = '/html/body/main/div/div/div/div[1]//h1/text()'
+XPATH_URL_MAIN_IMG_C2 = '/html/body/main/div/div/div/div/div/div/div//figure//img/@src'
 XPATH_CURRENCY_C2 = '/html/body/main/div[2]/div[2]/div[1]/div[1]/div[1]/div[2]/div[2]/div[1]/div/span/span[1]/text()'
 XPATH_MAIN_PRICE_INTEGER_C2 = '/html/body/main/div[2]/div[2]/div[1]/div[1]/div[1]/div[2]/div[2]/div/div/span/span[@class = "price-tag-fraction"]/text()'
 XPATH_MAIN_PRICE_CENTS_C2 = '/html/body/main/div[2]/div[2]/div[1]/div[1]/div[1]/div[2]/div[2]/div/div/span/span[@class = "price-tag-cents"]/text()'
@@ -60,6 +66,8 @@ XPATH_CATEGORY_PATH_C2 = '/html/body/main/div[2]/div[2]/div[1]/div[1]/div[4]/div
 #STEP 2. Define functions and decorators.
 
 def product_parsing_C1(parsed_doc):
+    Product_title_C1  = parsed_doc.xpath(XPATH_TITLE_C1) ##List of Image links
+    print(Product_title_C1)
     URL_Product_img_C1  = parsed_doc.xpath(XPATH_URL_MAIN_IMG_C1) ##List of Image links
     print(URL_Product_img_C1)
     Currency_C1  = parsed_doc.xpath(XPATH_CURRENCY_C1) ##List of currency
@@ -96,6 +104,8 @@ def product_parsing_C2( link ):
             Product_C2 = case_2.content.decode('utf-8')
             parsed_doc = html.fromstring(Product_C2)
             try:
+                Product_title_C2  = parsed_doc.xpath(XPATH_TITLE_C2) ##List of Image links
+                print(Product_title_C2)
                 URL_Product_img_C2  = parsed_doc.xpath(XPATH_URL_MAIN_IMG_C2) ##List of Image links
                 print(URL_Product_img_C2)
                 Currency_C2  = parsed_doc.xpath(XPATH_CURRENCY_C2) ##List of currency
@@ -162,22 +172,22 @@ def parse_offers( link ):
             try:
                 product_titles = parsed_offers.xpath(XPATH_PRODUCT_TITLES_AT_OFFERS) ##List of titles
                 #product_titles = product_titles.replace('\"', '')
-                print(product_titles)
+                #print(product_titles)
                 product_links  = parsed_offers.xpath(XPATH_URL_EACH_PROD_AT_OFFERS) ##List of links
-                print(product_links)
+                #print(product_links)
                 for product_url in product_links:
                     parse_ind_prod(product_url) #change for product_url and add tab
+                
+                button_link = parsed_offers.xpath(XPATH_NEXT_PAGE)[0]
+                print(button_link) 
+                parse_offers(button_link)
+                #encontrar el boton de siguiente en XPath y llamar parse_offers con el nuevo link
             except IndexError:
                 return
         else:
             raise ValueError(f'Error: {offers_response.status_code}') #This is the way to lift (raise) an Error           
     except ValueError as ve:
         print(ve)
-
-#Esto es para tomar datos de todas las páginas, una vez posicionado en offers.
-#for Sharingan in range[100]:
-    #Tsukuyomi = parsed_offers.xpath('/html/body/main/div/div[2]/div[2]/div/ul/li[Sharingan]/a/@href')
-    #parse_offers( Tsukuyomi )
 
 def parse_home():
     try:
@@ -186,7 +196,7 @@ def parse_home():
             Home = main_response.content.decode('utf-8')
             parsed_home = html.fromstring(Home)
             url_offers = parsed_home.xpath(XPATH_LINK_TO_OFFERS)[0] #this is the way to enter XPath exp to parsed html
-            print(url_offers)
+            #print(url_offers)
             parse_offers(url_offers)
         else:
             raise ValueError(f'Error: {main_response.status_code}') #This is the way to lift (raise) an Error
@@ -197,6 +207,7 @@ def parse_home():
 #STEP 3. Define Entry point
 
 def run():
+    sys.setrecursionlimit(1000)
     parse_home()
 
 if __name__ == '__main__':

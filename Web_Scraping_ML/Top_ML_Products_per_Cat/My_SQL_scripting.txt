@@ -1,0 +1,21 @@
+CREATE TABLE `ml_top_list`.`product_from_ml` (
+  `search_id` INT NOT NULL AUTO_INCREMENT COMMENT 'This is the searching ID.',
+  `region` VARCHAR(2) NOT NULL DEFAULT 'UN' COMMENT 'http://www.1728.org/countries.htm',
+  `product_url` VARCHAR(500) NOT NULL DEFAULT 'Not defined',
+  `product_img_src` VARCHAR(500) NOT NULL DEFAULT 'Not defined',
+  `product_title` VARCHAR(200) NOT NULL DEFAULT 'Not defined',
+  `currency` VARCHAR(3) NOT NULL DEFAULT 'USD',
+  `main_price` DOUBLE(8,2) NULL DEFAULT NULL,
+  `old_price` DOUBLE(8,2) NOT NULL DEFAULT 0.0,
+  `product_condition` ENUM('new', 'used') NOT NULL DEFAULT 'new',
+  `qty_sold` INT NOT NULL DEFAULT 0,
+  `product_desc` TEXT NULL DEFAULT NULL COMMENT 'This is a piece of code (Python dictionary)',
+  `average_rating` DOUBLE(2,2) NOT NULL DEFAULT 0.0,
+  `total_of_reviews` INT NOT NULL DEFAULT 0,
+  `root_category` VARCHAR(100) NOT NULL DEFAULT 'Not defined',
+  `catched_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`search_id`));
+
+SELECT 'search_id', 'region', 'product_url','product_title', 'product_img_src', 'currency', 'main_price', 'old_price', 'product_condition', 'qty_sold', 'product_desc', 'average_rating', 'total_of_reviews', 'root_category', 'catched_at' UNION ALL SELECT * FROM product_from_ml INTO OUTFILE "C:\\ProgramData\\MySQL\\MySQL Server 8.0\\Uploads\\csv_single_pipe_spaced_test.csv" fields terminated by ' | ' enclosed by ' ' lines terminated by '\n';
+
+SELECT 'search_id', 'region', 'product_url','product_title', 'product_img_src', 'currency', 'main_price', 'old_price', 'product_condition', 'qty_sold', 'product_desc', 'average_rating', 'total_of_reviews', 'root_category', 'catched_at' UNION ALL SELECT * FROM product_from_ml INTO OUTFILE "C:\\ProgramData\\MySQL\\MySQL Server 8.0\\Uploads\\csv_single_comma_spaced_test.csv" fields terminated by ',' enclosed by ' ' lines terminated by '\n';
