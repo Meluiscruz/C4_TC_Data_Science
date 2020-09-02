@@ -1,0 +1,94 @@
+"Valida la tienda a la cual pertenece"
+enum Shop {
+    Amazon
+    Mercado Libre
+}
+
+union GlobalSearch = Product
+
+type Product {
+  _id: ID!
+  name: String!
+  imageURL: String!
+  link: String!
+  stars: Float
+  reviews: Int
+  cathegory: Cathegory!
+  store: Store!
+  country: Country!
+  TRP: [TRP]
+}
+
+type Store {
+  _id: ID!
+  name: String!
+}
+
+type Cathegory {
+  _id: ID!
+  name: String!
+}
+
+type Country {
+  _id: ID!
+  country: String!
+}
+
+type TRP {
+  Time: String!
+  Rank: Int!
+  Price: Int!
+  Price_max: Int
+}
+
+type Query {
+  "Devuelve todos los productos"
+  getProducts(countryID: ID, storeID: ID, cathegoryID: ID): [Product]
+  "Devuelve un producto"
+  getProduct(id: ID!): Product
+  "Devuelve todas las categorias"
+  getCathegorys: [Cathegory]
+  "Devuelve una Cathegoria"
+  getCathegory(id: ID!): Cathegory
+  "Devuelve todas las tiendas"
+  getStores: [Store]
+  "Devuelve una tienda"
+  getStore(id: ID!): Store
+  "Ejecuta una busqueda en los productos"
+  searchItems(keyword: String!): [GlobalSearch]
+}
+
+# interface Person {
+#     _id: ID!
+#     name: String!
+#     email: String!
+# }
+
+# input ProductInput {
+#   name: String!
+#   imageURL: String!
+#   link: String!
+#   stars: Float
+#   reviews: Int
+#   cathegory: String!
+#   store: Shop!
+#   country: String!
+#   TRP: [TRP]
+# }
+
+# type Mutation {
+#     "Crea un curso o edita si lo encuentra"
+#     createCourse(input: ProductInput!): Product
+    # "Edita un curso"
+    # editCourse(_id: ID!, input: CourseEditInput): Course
+    # "Elimina un curso"
+    # deleteCourse(_id: ID!): String
+    # "Crea un estudiante"
+    # createPerson(input: PersonInput!): Person
+    # "Edita un estudiante"
+    # editPerson(_id: ID!, input: PersonEditInput!): Person
+    # "Elimina un estudiante"
+    # deletePerson(_id: ID!): String
+    # "Agrega persona a un curso"
+    # addPeople(courseID: ID!, personID: ID!): Course
+# }

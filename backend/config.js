@@ -7,8 +7,10 @@ module.exports = {
         port: process.env.API_PORT
     },
     mongo: {
-        port: process.env.MONGO_PORT,
-        url: process.env.MONGO_URL
+        user: process.env.MONGO_USER,
+        password: process.env.MONGO_PASSWORD,
+        host: process.env.MONGO_HOST,
+        name: process.env.MONGO_NAME
     },
     product: {
         port: process.env.PRODUCT_PORT

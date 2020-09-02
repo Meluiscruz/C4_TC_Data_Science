@@ -1,20 +1,43 @@
-const express = require('express')
-const bodyParser = require('body-parser')
+const { makeExecutableSchema } = require('graphql-tools')
+const express = require("express");
+const { graphqlHTTP } = require("express-graphql");
+const cors = require("cors");
+const { readFileSync } = require("fs");
+const { join } = require("path");
+const resolvers = require("./lib/resolvers");
+const config = require("../config");
 
-const swaggerUI = require('swagger-ui-express')
+const app = express();
+const port = process.env.PORT || 3000;
 
-const config = require('../config')
+// definiendo el schema
+const typeDefs = readFileSync(
+  join(__dirname, "lib", "schema.graphql"),
+  "utf-8"
+);
 
-const app = express()
+const schema = makeExecutableSchema({typeDefs, resolvers});
 
-app.use(bodyParser.json())
+app.use(cors());
 
-const swaggerDoc = require('./swagger.json')
+app.use(
+  "/api",
+  graphqlHTTP({
+    schema: schema,
+    rootValue: resolvers,
+    graphiql: false,
+  })
+);
 
-//Router
+app.use(
+  "/api-docs/v2",
+  graphqlHTTP({
+    schema: schema,
+    rootValue: resolvers,
+    graphiql: true,
+  })
+);
 
-app.use('/api-docs/v1', swaggerUI.serve, swaggerUI.setup(swaggerDoc))
-
-app.listen(config.api.port, () => {
-    console.log('Api escuchando en el puerto', config.api.port);
-})
+app.listen(port, () => {
+  console.log(`Server is listening at http://localhost:${config.api.port}/api`);
+});
