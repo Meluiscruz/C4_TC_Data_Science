@@ -16,7 +16,10 @@ type Product {
   cathegory: Cathegory!
   store: Store!
   country: Country!
-  TRP: [TRP]
+  Time: String
+  Rank: Int!
+  Price: Int
+  Price_max: Int
 }
 
 type Store {
@@ -32,13 +35,6 @@ type Cathegory {
 type Country {
   _id: ID!
   country: String!
-}
-
-type TRP {
-  Time: String!
-  Rank: Int!
-  Price: Int!
-  Price_max: Int
 }
 
 type Query {
@@ -64,21 +60,24 @@ type Query {
 #     email: String!
 # }
 
-# input ProductInput {
-#   name: String!
-#   imageURL: String!
-#   link: String!
-#   stars: Float
-#   reviews: Int
-#   cathegory: String!
-#   store: Shop!
-#   country: String!
-#   TRP: [TRP]
-# }
+input ProductInput {
+  name: String!
+  imageURL: String!
+  link: String!
+  stars: Float
+  reviews: Int
+  cathegory: String!
+  store: String!
+  country: String!
+  Time: String!
+  Rank: Int!
+  Price: Int!
+  Price_max: Int
+}
 
-# type Mutation {
-#     "Crea un curso o edita si lo encuentra"
-#     createCourse(input: ProductInput!): Product
+type Mutation {
+    "Deja caer un curso"
+    releaseProduct(input: ProductInput!): Product
     # "Edita un curso"
     # editCourse(_id: ID!, input: CourseEditInput): Course
     # "Elimina un curso"
@@ -91,4 +90,4 @@ type Query {
     # deletePerson(_id: ID!): String
     # "Agrega persona a un curso"
     # addPeople(courseID: ID!, personID: ID!): Course
-# }
+}
