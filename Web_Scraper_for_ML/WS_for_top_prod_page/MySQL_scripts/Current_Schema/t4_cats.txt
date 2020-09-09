@@ -1,8 +1,0 @@
-CREATE TABLE `ml_top_list`.`t4_cats` (
-  `Product_ID` VARCHAR(50) NOT NULL,
-  `legend_cat` VARCHAR(100) NULL DEFAULT NULL,
-  `root_category` VARCHAR(100) NULL DEFAULT NULL,
-  `catched_at` VARCHAR(100) NULL DEFAULT NULL,
-  `legend_pos` VARCHAR(2) NULL DEFAULT NULL,
-  PRIMARY KEY (`Product_ID`))
-COMMENT = 'This is the product position table and related with category info';
