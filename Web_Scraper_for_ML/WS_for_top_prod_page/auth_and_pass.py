@@ -1,0 +1,2 @@
+MY_SQL_ADMIN_USER = 'admin'
+MY_SQL_ADMIN_PASS = 'v1d3074p3'

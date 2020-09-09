@@ -1,0 +1,13 @@
+CREATE TABLE `ml_top_list`.`t2_product` (
+  `Product_ID` VARCHAR(50) NOT NULL,
+  `region` VARCHAR(2) NOT NULL DEFAULT 'UN' COMMENT 'http://www.1728.org/countries.htm',
+  `product_url` VARCHAR(500) NULL DEFAULT NULL,
+  `product_title` VARCHAR(280) NULL DEFAULT NULL,
+  `product_img_src` VARCHAR(500) NULL DEFAULT NULL,
+  `product_condition` ENUM('new', 'used') NOT NULL DEFAULT 'new',
+  PRIMARY KEY (`Product_ID`),
+  UNIQUE INDEX `Product_ID_UNIQUE` (`Product_ID` ASC) VISIBLE)
+COMMENT = 'On this table is all the data related with pricing.';
+
+ALTER TABLE `ml_top_list`.`t2_product` 
+COMMENT = 'On this table is all the data related with product.' ;

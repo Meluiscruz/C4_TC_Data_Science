@@ -1,0 +1,7 @@
+CREATE TABLE `ml_top_list`.`t1_pricing` (
+  `Product_ID` VARCHAR(50) NOT NULL,
+  `currency` VARCHAR(3) NULL DEFAULT 'USD',
+  `main_price` VARCHAR(10) NULL DEFAULT NULL,
+  `old_price` VARCHAR(10) NULL DEFAULT NULL,
+  PRIMARY KEY (`Product_ID`))
+COMMENT = 'On this table is all the data related with pricing';
