@@ -1,9 +1,3 @@
-"Valida la tienda a la cual pertenece"
-enum Shop {
-    Amazon
-    Mercado Libre
-}
-
 union GlobalSearch = Product
 
 type Product {
@@ -18,8 +12,8 @@ type Product {
   country: Country!
   Time: String
   Rank: Int!
-  Price: Int
-  Price_max: Int
+  Price: Float
+  Price_max: Float
 }
 
 type Store {
@@ -78,16 +72,6 @@ input ProductInput {
 type Mutation {
     "Deja caer un curso"
     releaseProduct(input: ProductInput!): Product
-    # "Edita un curso"
-    # editCourse(_id: ID!, input: CourseEditInput): Course
-    # "Elimina un curso"
-    # deleteCourse(_id: ID!): String
-    # "Crea un estudiante"
-    # createPerson(input: PersonInput!): Person
-    # "Edita un estudiante"
-    # editPerson(_id: ID!, input: PersonEditInput!): Person
-    # "Elimina un estudiante"
-    # deletePerson(_id: ID!): String
     # "Agrega persona a un curso"
     # addPeople(courseID: ID!, personID: ID!): Course
 }

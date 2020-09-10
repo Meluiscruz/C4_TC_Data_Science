@@ -2,23 +2,57 @@ const connectDB = require('./db')
 const { ObjectID } = require('mongodb')
 const errorHandler = require('./errorHandler')
 
+async function verifyItems(newProduct) {
+    let db = await connectDB()
+
+    //Verifica si existe en categorias
+    //si es asi le añade el ID sino la crea y añade el id
+    exist = await db.collection('Cathegorys').findOne({name: newProduct.cathegory})
+    if(exist) {
+        newProduct.cathegory = ObjectID(exist._id) 
+    } else {
+        await db.collection('Cathegorys').insertOne({name: newProduct.cathegory}) 
+    }
+
+    //Verifica si existe la tienda
+    //si es asi le añade el ID sino la crea y añade el id
+    exist = await db.collection('Stores').findOne({name: newProduct.store})
+    if(exist) {
+        newProduct.store = ObjectID(exist._id) 
+    } else {
+        await db.collection('Stores').insertOne({name: newProduct.store}) 
+    }
+    
+    //Verifica si existe el pais
+    //si es asi le añade el ID sino la crea y añade el id
+    exist = await db.collection('Countrys').findOne({country: newProduct.country})
+    if(exist) {
+        newProduct.country = ObjectID(exist._id) 
+    } else {
+        await db.collection('Countrys').insertOne({country: newProduct.country}) 
+    }
+
+    return newProduct
+}
+
 module.exports = {
     releaseProduct: async (root, { input }) => {
         
         //nuevo objeto
-        const newProduct = Object.assign(input)
+        let newProduct = Object.assign(input)
 
         let db
-        let product
+        let Product
         let condition
 
         try {
 
             db = await connectDB()
             condition = await db.collection('Products').findOne({link: newProduct.link})
+
+            newProduct = await verifyItems(newProduct)
             
             if(condition) {
-
                 await db.collection('Products').updateOne(
                     { _id: ObjectID(condition._id)  },
                     {$set: newProduct}
@@ -27,33 +61,6 @@ module.exports = {
                 Product = await db.collection('Products').findOne({_id: ObjectID(condition._id)})
 
             } else {
-
-                //Verifica si existe en categorias
-                //si es asi le añade el ID sino la crea y añade el id
-                exist = await db.collection('Cathegorys').findOne({name: newProduct.cathegory})
-                if(exist) {
-                    newProduct.cathegory = ObjectID(exist._id) 
-                } else {
-                    await db.collection('Cathegorys').insertOne({name: newProduct.cathegory}) 
-                }
-
-                //Verifica si existe la tienda
-                //si es asi le añade el ID sino la crea y añade el id
-                exist = await db.collection('Stores').findOne({name: newProduct.store})
-                if(exist) {
-                    newProduct.store = ObjectID(exist._id) 
-                } else {
-                    await db.collection('Stores').insertOne({name: newProduct.store}) 
-                }
-                
-                //Verifica si existe el pais
-                //si es asi le añade el ID sino la crea y añade el id
-                exist = await db.collection('Countrys').findOne({country: newProduct.country})
-                if(exist) {
-                    newProduct.country = ObjectID(exist._id) 
-                } else {
-                    await db.collection('Countrys').insertOne({country: newProduct.country}) 
-                }
                 Product = await db.collection('Products').insertOne(newProduct)
                 Product = db.collection('Products').findOne({_id: ObjectID(Product.insertedId)})
             }
