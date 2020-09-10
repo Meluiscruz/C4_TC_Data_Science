@@ -71,8 +71,8 @@ input ProductInput {
   country: String!
   Time: String!
   Rank: Int!
-  Price: Int!
-  Price_max: Int
+  Price: Float!
+  Price_max: Float
 }
 
 type Mutation {
